@@ -13,6 +13,9 @@ def main():
             #清除单个英文字符的query
             if len(line) == 1:
                 continue
+            #过滤过短的query
+            if len(line) <= 2:
+                continue
             #清除爬虫爬宝贝id的query
             if re.match('[0-9]{18}', line) != None:
                 continue
