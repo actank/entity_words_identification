@@ -16,6 +16,7 @@ location_dict = {}
 material_dict = {}
 style_dict = {}
 sex_dict = {}
+effect_dict = {}
 
 def read_product_dict():
     with open("../data/product_ext.dic", "r") as f:
@@ -53,6 +54,12 @@ def read_sex_dict():
         for line in f:
             line = line.strip()
             sex_dict[line] = 1
+    return
+def read_effect_dict():
+    with open("../data/effect_ext.dict", "r") as f:
+        for line in f:
+            line = line.strip()
+            effect_dict[line] = 1
     return
 
 
@@ -106,6 +113,23 @@ def tagging():
                         else:
                             tagged_term.append(term[j] + " I-style")
                     ll[i] = ",".join(tagged_term)
+                if sex_dict.has_key(term):
+                    term = term.decode('utf-8')
+                    for j in range(len(term)):
+                        if j == 0:
+                            tagged_term.append(term[j] + " B-sex")
+                        else:
+                            tagged_term.append(term[j] + " I-sex")
+                    ll[i] = ",".join(tagged_term)
+                if effect_dict.has_key(term):
+                    term = term.decode('utf-8')
+                    for j in range(len(term)):
+                        if j == 0:
+                            tagged_term.append(term[j] + " B-effect")
+                        else:
+                            tagged_term.append(term[j] + " I-effect")
+                    ll[i] = ",".join(tagged_term)
+
 
             output.write(",".join(ll) + "\n")
     output.close()
@@ -119,6 +143,8 @@ def main():
     read_location_dict()
     read_material_dict()
     read_style_dict()
+    read_sex_dict()
+    read_effect_dict()
     tagging()
     return
 
