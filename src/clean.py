@@ -13,6 +13,13 @@ import jieba.posseg as pseg
 
 s_list = []
 bow_list = []
+synonym_dict = {}
+def load_synonym_dict():
+    with open("../data/ikdic/synonym_ext.dic", "r") as f:
+        for line in f:
+            line = line.strip().split("\t")
+            synonym_dict[line[0]] = line[1]
+    return
 def clean():
     output = open("./train.data", "w")
     with open("../data/prepare_data", "r") as f:
@@ -43,6 +50,11 @@ def clean():
                 if i == u"\u2006" or i == u" " or i == " ":
                     continue
                 line.append(i)
+            #同义词替换，简写替换
+            for i in range(len(line)):
+                if synonym_dict.has_key(line[i]):
+                    line[i] = synonym_dict[line[i]]
+
             #过滤重复query
             if line in s_list:
                 continue
@@ -52,6 +64,7 @@ def clean():
     output.close()
     return
 def main():
+    load_synonym_dict()
     clean()
     return
 
