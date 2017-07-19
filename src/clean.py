@@ -15,12 +15,14 @@ s_list = []
 bow_list = []
 synonym_dict = {}
 def load_synonym_dict():
-    with open("../data/ikdic/synonym_ext.dic", "r") as f:
+    with open("../data/synonym_ext.dic", "r") as f:
         for line in f:
+            print line
             line = line.strip().split("\t")
             synonym_dict[line[0]] = line[1]
     return
 def clean():
+    jieba.load_userdict("../data/segmention/unigram.txt")
     output = open("./train.data", "w")
     with open("../data/prepare_data", "r") as f:
         for line in f:
