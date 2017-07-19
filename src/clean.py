@@ -17,7 +17,6 @@ synonym_dict = {}
 def load_synonym_dict():
     with open("../data/synonym_ext.dic", "r") as f:
         for line in f:
-            print line
             line = line.strip().split("\t")
             synonym_dict[line[0]] = line[1]
     return

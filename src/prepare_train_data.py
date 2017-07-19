@@ -7,6 +7,8 @@ sys.setdefaultencoding('utf8')
 import os
 import re
 import chardet
+import jieba
+import jieba.posseg
 
 
 def main():
@@ -17,7 +19,7 @@ def main():
 			line = line.strip().split(",")
 			flag = False
 			for i in line:
-				if re.search("B-", i) == None and re.search("I-", i) == None:
+				if re.search("[PBMSTLE]-", i) == None:
 					flag = True
 					break
 			if flag == True:

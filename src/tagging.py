@@ -72,64 +72,33 @@ def tagging():
             ll = line.split(",")
             for i in range(len(ll)):
                 term = ll[i]
-                tagged_term = []
+                seg = pseg.cut(term)
+                nominal = seg.next().flag
+                tag = ""
                 if product_dict.has_key(term):
                     term = term.decode('utf-8')
-                    for j in range(len(term)):
-                        if j == 0:
-                            tagged_term.append(term[j] + " B-product")
-                        else:
-                            tagged_term.append(term[j] + " I-product")
-                    ll[i] = ",".join(tagged_term)
-                if brand_dict.has_key(term):
+                    tag = "P-product"
+                elif brand_dict.has_key(term):
                     term = term.decode('utf-8')
-                    for j in range(len(term)):
-                        if j == 0:
-                            tagged_term.append(term[j] + " B-brand")
-                        else:
-                            tagged_term.append(term[j] + " I-brand")
-                    ll[i] = ",".join(tagged_term)
-                if location_dict.has_key(term):
+                    tag = "B-brand"
+                elif location_dict.has_key(term):
                     term = term.decode('utf-8')
-                    for j in range(len(term)):
-                        if j == 0:
-                            tagged_term.append(term[j] + " B-location")
-                        else:
-                            tagged_term.append(term[j] + " I-location")
-                    ll[i] = ",".join(tagged_term)
-                if material_dict.has_key(term):
+                    tag = "L-location"
+                elif material_dict.has_key(term):
                     term = term.decode('utf-8')
-                    for j in range(len(term)):
-                        if j == 0:
-                            tagged_term.append(term[j] + " B-material")
-                        else:
-                            tagged_term.append(term[j] + " I-material")
-                    ll[i] = ",".join(tagged_term)
-                if style_dict.has_key(term):
+                    tag = "M-material"
+                elif style_dict.has_key(term):
                     term = term.decode('utf-8')
-                    for j in range(len(term)):
-                        if j == 0:
-                            tagged_term.append(term[j] + " B-style")
-                        else:
-                            tagged_term.append(term[j] + " I-style")
-                    ll[i] = ",".join(tagged_term)
-                if sex_dict.has_key(term):
+                    tag = "ST-style"
+                elif sex_dict.has_key(term):
                     term = term.decode('utf-8')
-                    for j in range(len(term)):
-                        if j == 0:
-                            tagged_term.append(term[j] + " B-sex")
-                        else:
-                            tagged_term.append(term[j] + " I-sex")
-                    ll[i] = ",".join(tagged_term)
-                if effect_dict.has_key(term):
+                    tag = "S-sex"
+                elif effect_dict.has_key(term):
                     term = term.decode('utf-8')
-                    for j in range(len(term)):
-                        if j == 0:
-                            tagged_term.append(term[j] + " B-effect")
-                        else:
-                            tagged_term.append(term[j] + " I-effect")
-                    ll[i] = ",".join(tagged_term)
-
+                    tag = "E-effect"
+                term = term.replace("\t", " ")
+                term = term.replace(" ","")
+                ll[i] = "%s\t%s\t%s" % (term, nominal, tag)
 
             output.write(",".join(ll) + "\n")
     output.close()
