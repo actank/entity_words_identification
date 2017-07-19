@@ -1,1 +1,4 @@
 sys_log
+train.data
+*.data
+*.tar.gz
