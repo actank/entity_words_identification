@@ -175,14 +175,14 @@ def deal(file_name):
 if __name__ == '__main__':
 
     # 将要转换的词库添加在这里就可以了
-    o = [u'阿里巴巴产品词汇－精细化学品.scel',]
+    o = [u'美容词汇大全【官方推荐】.scel',]
 
 
     for f in o:
         deal(f)
 
         # 保存结果
-    f = open('product_jingxihuaxuepin.txt', 'w')
+    f = open('product_meirong.txt', 'w')
     for word in GTable:
         # GTable保存着结果，是一个列表，每个元素是一个元组(词频,拼音,中文词组)，有需要的话可以保存成自己需要个格式
         # 我没排序，所以结果是按照上面输入文件的顺序
